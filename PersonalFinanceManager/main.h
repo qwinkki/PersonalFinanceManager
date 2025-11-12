@@ -3,8 +3,9 @@
 #include <vector>
 #include "Windows.h"
 #include "Transaction.h"
+#include "Special.h"
 
-void OpenDBAndConvertToVector(std::vector<Transaction>& r) {
+void OpenDBAndConvertToVector(std::vector<Transaction>& Transactions) {
 
 	Transaction a, b;
 	a.id = 12414;
@@ -20,6 +21,6 @@ void OpenDBAndConvertToVector(std::vector<Transaction>& r) {
 	b.description = "123ouhfgiud";
 	b.isIncome = false;
 
-	r.push_back(a);
-	r.push_back(b);
+	Transactions.push_back(a);
+	Transactions.push_back(b);
 }

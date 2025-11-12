@@ -18,12 +18,21 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Transaction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Special.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Transaction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Special.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
