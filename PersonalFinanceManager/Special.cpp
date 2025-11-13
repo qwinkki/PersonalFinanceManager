@@ -1,14 +1,8 @@
 #include "Special.h"
-#include <iostream>
-#include <vector>
-#include <string>
-#include <random>
-#include <ctime>
 
 void Special(std::vector<Transaction>& mainDB) {
     system("cls");
     int choose;
-    std::vector<Transaction> v;
     do {
         std::cout << "1. Generage Transactions"
             << "\n2. Delete all Transactions"
@@ -18,9 +12,7 @@ void Special(std::vector<Transaction>& mainDB) {
     
         switch (choose) {
         case 1:
-            v = generateAndAddRndTransactions();
-            mainDB.insert(mainDB.end(), v.begin(), v.end());
-            system("pause");
+            generateAndAddRndTransactions(mainDB);
             break;
         case 2:
             deleteAllTransitions(mainDB);
@@ -32,7 +24,7 @@ void Special(std::vector<Transaction>& mainDB) {
     } while (choose != 3);
 }
 
-std::vector<Transaction> generateAndAddRndTransactions() {
+void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
     int countTr;
     std::vector<Transaction> newEl;
     system("cls");
@@ -43,7 +35,7 @@ std::vector<Transaction> generateAndAddRndTransactions() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<double> amountDist(10.0, 10000.0);
-    std::uniform_int_distribution<int> idDist(1000, 9999);
+    std::uniform_int_distribution<int> idDist(0, 9999);
     std::uniform_int_distribution<int> dayDist(1, 28);
     std::uniform_int_distribution<int> monthDist(1, 12);
     std::uniform_int_distribution<int> yearDist(2020, 2024);
@@ -91,19 +83,23 @@ std::vector<Transaction> generateAndAddRndTransactions() {
             transaction.isIncome = boolDist(gen);
 
             newEl.push_back(transaction);
+            std::cout << "Created new Transaction with id: " << transaction.id << '\n';
         }
     }
     catch (std::exception e) {
-        std::cout << "Not succesfully generated\n\n";
+        std::cout << "\n\nNot succesfully generated\n\n";
     }
 
-    std::cout << "Succesfully generated!\n\n";
-    return newEl;
+    std::cout << "\n\nSuccesfully generated!\n\n";
+    mainDB.insert(mainDB.end(), newEl.begin(), newEl.end());
+    system("pause");
 }
 
 void deleteAllTransitions(std::vector<Transaction>& Transactions) {
     system("cls");
+    std::cout << "Size transformered: " << Transactions.size() << " => ";
     Transactions.clear();
-    std::cout << "Succesfully cleared!\n\n";
+    std::cout << Transactions.size() << '\n'
+        << (Transactions.size() == 0 ? "Succesfully cleared!\n\n" : "Err: Not Cleared.\n\n");
     system("pause");
 }
