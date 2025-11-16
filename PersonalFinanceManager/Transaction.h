@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Transaction.h"
-
 
 struct Transaction {
 	int id;

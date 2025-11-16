@@ -123,11 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Autorazation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Special.cpp" />
     <ClCompile Include="Transaction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Autorization.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Special.h" />
     <ClInclude Include="Transaction.h" />

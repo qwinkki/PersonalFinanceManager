@@ -1,4 +1,5 @@
 #include "main.h"
+#include "Autorization.h"
 
 int main()
 {
@@ -13,6 +14,46 @@ int main()
 	Sleep(800);
 	system("cls");
 	*/
+	
+	Autorize auth;
+	int authChoice;
+	while (true) {
+		system("cls");
+		std::cout << std::string(10, '=') << "Autorization" << std::string(10, '=')
+			<< "\n1. Login\n"
+			<< "2. Register\n"
+			<< "3. Exit Program\n"
+			<< "Your choice: ";
+		std::cin >> authChoice;
+
+		if (authChoice == 1) {
+			system("cls");
+			std::string l, p;
+			std::cout << "Login: ";
+			std::cin >> l;
+			std::cout << "Password: ";
+			std::cin >> p;
+			if (auth.login(l, p)) break;
+			else {
+				std::cout << "\n\nwrong password";
+				system("pause");
+			}
+		}
+		else if (authChoice == 2) {
+			system("cls");
+			std::string l, p;
+			std::cout << "Create user\nLogin: ";
+			std::cin >> l;
+			std::cout << "Password: ";
+			std::cin >> p;
+
+			auth.registerUser(l, p);
+			system("pause");
+		}
+		else if (authChoice == 3) return 0;
+
+	}
+
 	std::vector<Transaction> mainDB;
 	OpenDBAndConvertToVector(mainDB);
 
@@ -41,6 +82,7 @@ int main()
 			Special(mainDB);
 			break;
 		default:
+			std::cout << "\n\nWrong choice!";
 			break;
 		}
 		system("cls");
