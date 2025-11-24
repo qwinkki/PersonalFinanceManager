@@ -11,3 +11,5 @@ public:
 	bool login(const std::string& name, const std::string& pass);
 	bool hasRegisteredUser() const;
 };
+
+std::string authMenu();

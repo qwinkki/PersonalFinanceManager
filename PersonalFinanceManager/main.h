@@ -6,4 +6,4 @@
 #include "Special.h"
 #include "Autorization.h"
 
-void OpenDBAndConvertToVector(std::vector<Transaction>& Transactions);
+void OpenDBAndConvertToVector(std::vector<Transaction>& mainDB, std::string tableName);

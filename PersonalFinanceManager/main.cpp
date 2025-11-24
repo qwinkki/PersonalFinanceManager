@@ -14,55 +14,14 @@ int main()
 	system("cls");
 	*/
 	
-
-	int authChoice;
+	std::string login;
 	do {
-		//temp
-		authChoice = 3;
 
-		/*
-		Autorize auth;
-		while (true) {
-			system("cls");
-			std::cout << std::string(10, '=') << "Autorization" << std::string(10, '=')
-				<< "\n1. Login\n"
-				<< "2. Register\n"
-				<< "3. Exit Program\n"
-				<< "Your choice: ";
-			std::cin >> authChoice;
-
-			if (authChoice == 1) {
-				system("cls");
-				std::string l, p;
-				std::cout << "Login: ";
-				std::cin >> l;
-				std::cout << "Password: ";
-				std::cin >> p;
-				if (auth.login(l, p)) break;
-				else {
-					std::cout << "\n\nwrong password";
-					system("pause");
-				}
-			}
-			else if (authChoice == 2) {
-				system("cls");
-				std::string l, p;
-				std::cout << "Create user\nLogin: ";
-				std::cin >> l;
-				std::cout << "Password: ";
-				std::cin >> p;
-
-				auth.registerUser(l, p);
-				system("pause");
-			}
-			else if (authChoice == 3) return 0;
-			else std::cout << "Wrong choice!";
-
-		}
-		*/
+		login = authMenu();
+		if (login == "::exit") return 0;
 
 		std::vector<Transaction> mainDB;
-		OpenDBAndConvertToVector(mainDB); // задваться пользователь и имя таблицы от него
+		OpenDBAndConvertToVector(mainDB, login); // задваться пользователь и имя таблицы от него
 
 		int mainChoice;
 		do {
@@ -90,19 +49,22 @@ int main()
 			case 5:
 				Special(mainDB);
 				break;
+			case 6:
+				// exit and save db
+				break;
 			default:
 				std::cout << "\n\nWrong choice!";
 				break;
 			}
 			system("cls");
 		} while (mainChoice != 6);
-	} while (authChoice != 3);
+	} while (login != "::exit");
 
 	system("cls");
 	system("pause");
 }
 
 
-void OpenDBAndConvertToVector(std::vector<Transaction>& mainDB) {
+void OpenDBAndConvertToVector(std::vector<Transaction>& mainDB, std::string tableName) {
 
 }
