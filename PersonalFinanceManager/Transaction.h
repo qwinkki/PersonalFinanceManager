@@ -13,3 +13,4 @@ struct Transaction {
 };
 
 void ShowAllTransactions(std::vector<Transaction> Transactions);
+void addObjects(std::vector<Transaction>& mainDB);

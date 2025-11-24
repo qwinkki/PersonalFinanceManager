@@ -31,17 +31,17 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
     std::cout << "Choose how much new Transactions you need: ";
     std::cin >> countTr;
 
-    // Инициализация генератора случайных чисел
+    
+    int newId = mainDB.size() > 0 ? mainDB[mainDB.size() - 1].id : 0;
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<double> amountDist(10.0, 10000.0);
-    std::uniform_int_distribution<int> idDist(0, 9999);
     std::uniform_int_distribution<int> dayDist(1, 28);
     std::uniform_int_distribution<int> monthDist(1, 12);
     std::uniform_int_distribution<int> yearDist(2020, 2024);
     std::uniform_int_distribution<int> boolDist(0, 1);
 
-    // Массивы для случайных данных
     std::vector<std::string> categories = {
         "Food", "Transport", "Utilities", "Entertainment",
         "Healthcare", "Education", "Shopping", "Salary",
@@ -59,35 +59,30 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
         for (int i = 0; i < countTr; i++) {
             Transaction transaction;
 
-            // Генерация случайного ID
-            transaction.id = idDist(gen);
+            newId++;
+            transaction.id = newId;
 
-            // Случайная категория
             std::uniform_int_distribution<int> catDist(0, categories.size() - 1);
             transaction.category = categories[catDist(gen)];
 
-            // Случайная сумма
-            transaction.amount = std::round(amountDist(gen) * 100) / 100; // Округление до 2 знаков
+            transaction.amount = std::round(amountDist(gen) * 100) / 100;
 
-            // Случайная дата
             int day = dayDist(gen);
             int month = monthDist(gen);
             int year = yearDist(gen);
             transaction.date = std::to_string(day) + "." + std::to_string(month) + "." + std::to_string(year);
 
-            // Случайное описание
             std::uniform_int_distribution<int> descDist(0, descriptions.size() - 1);
             transaction.description = descriptions[descDist(gen)];
 
-            // Случайный тип транзакции (доход/расход)
             transaction.isIncome = boolDist(gen);
 
             newEl.push_back(transaction);
             std::cout << "Created new Transaction with id: " << transaction.id << '\n';
         }
     }
-    catch (std::exception e) {
-        std::cout << "\n\nNot succesfully generated\n\n";
+    catch (const std::exception& e) {
+        std::cout << "\n\nNot succesfully generated: " << e.what() << "\n\n";
     }
 
     std::cout << "\n\nSuccesfully generated!\n\n";
