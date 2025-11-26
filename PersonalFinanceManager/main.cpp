@@ -2,18 +2,6 @@
 
 int main()
 {
-	/*
-	std::cout << "DB connected";
-	Sleep(800);
-	std::cout << " .";
-	Sleep(800);
-	std::cout << " .";
-	Sleep(800);
-	std::cout << " .";
-	Sleep(800);
-	system("cls");
-	*/
-	
 	std::string login;
 	do {
 
@@ -62,9 +50,4 @@ int main()
 
 	system("cls");
 	system("pause");
-}
-
-
-void OpenDBAndConvertToVector(std::vector<Transaction>& mainDB, std::string tableName) {
-
 }

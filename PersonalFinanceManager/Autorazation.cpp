@@ -21,6 +21,8 @@ bool Autorize::hasRegisteredUser() const {
 	return isRegistered;
 }
 
+
+
 std::string authMenu() {
 	int authChoice;
 	std::string l, p;
@@ -30,7 +32,8 @@ std::string authMenu() {
 		std::cout << std::string(10, '=') << "Autorization" << std::string(10, '=')
 			<< "\n1. Login\n"
 			<< "2. Register\n"
-			<< "3. Exit Program\n"
+			<< "3. Special\n"
+			<< "4. Exit Program\n"
 			<< "Your choice: ";
 		std::cin >> authChoice;
 
@@ -58,7 +61,28 @@ std::string authMenu() {
 			auth.registerUser(l, p);
 			system("pause");
 		}
-		else if (authChoice == 3) return "::exit";
+		else if (authChoice == 3) {
+			int authChoiceSpecial;
+			do {
+				system("cls");
+				std::cout << "\n1. Delete User\n"
+					<< "2. Delete Table with Data by User\n"
+					<< "3. Exit\n"
+					<< "Your choice: ";
+				std::cin >> authChoiceSpecial;
+
+				switch (authChoiceSpecial) // do
+				{
+				case 1:
+					break;
+				case 2:
+					break;
+				default:
+					break;
+				}
+			} while (authChoiceSpecial != 3);
+		}
+		else if (authChoice == 4) return "::exit";
 		else std::cout << "Wrong choice!";
 	}
 	return "-ERROR";

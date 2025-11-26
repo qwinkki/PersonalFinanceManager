@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Database.h"
 
 class Autorize {
 	std::string username;
