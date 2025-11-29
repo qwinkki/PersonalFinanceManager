@@ -2,6 +2,9 @@
 
 int main()
 {
+	initializeUserDatabase(); // creating if dont exist user table
+	system("pause");
+
 	std::string login;
 	do {
 
@@ -9,7 +12,7 @@ int main()
 		if (login == "::exit") return 0;
 
 		std::vector<Transaction> mainDB;
-		OpenDBAndConvertToVector(mainDB, login); // задваться пользователь и имя таблицы от него
+		OpenDBAndConvertToVector(mainDB, login); 
 
 		int mainChoice;
 		do {

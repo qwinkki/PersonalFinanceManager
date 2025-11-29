@@ -1,5 +1,16 @@
 #include "Database.h"
 
+
+
+// MAIN CONNECTION
+pqxx::connection& Database::getInstance() {
+	if (!conn) static Database instance;
+	return *conn;
+}
+
+
+
+
 std::unique_ptr<pqxx::connection> Database::conn = nullptr;
 Database::Database() {
 	system("cls");
@@ -20,17 +31,12 @@ Database::Database() {
 		}
 }
 
-pqxx::connection& Database::getInstance() {
-	if (!conn) static Database instance;
-	return *conn;
-}
-
-//concept
 void initializeUserDatabase() {
 	try {
 		pqxx::work w(Database::getInstance());
 		w.exec("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL);");
 		w.commit();
+		std::cout << "Succesfully initialize user table in database.\n";
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
