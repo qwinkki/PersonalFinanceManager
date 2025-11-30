@@ -10,7 +10,7 @@ Here, in project i use:
  - etc.
 
 To run the project you need:
- - code editor, in my case Visual Studio 2022
+ - Visual Studio 2022 or greater
  - git
  - pgAdmin 4
  - PostgreSQL
@@ -18,7 +18,7 @@ To run the project you need:
 # How to run
 To run the project follow steps:
 1. git clone project in project folder (/PATH/)
-2. download vcpkg in /PATH/ of the project and download libpqxx* (guide: https://github.com/qwinkki/DockerPostgreSQLAuth)
+2. download vcpkg* in /PATH/ of the project and download libpqxx* (guide: https://github.com/qwinkki/DockerPostgreSQLAuth)
 3. USE 20+ VERSION OF COMPILING IN MAIN OPTIONS OF THE PROJECT !!!
 4. create "PersonalFinanceManager" server in pgAdmin 4 (also you need username "postgres" in pgAdmin 4 and password: 123 | or you can change username and password in Database.cpp (variable conn) and in .yml file)
 5. start the project
@@ -26,5 +26,6 @@ To run the project follow steps:
 
 
 *libpqxx - .h, .lib, .hxx and so on files to connect PostgreSQL in c++ language
+*vcpkg - to download vcpkg use git: git clone https://github.com/microsoft/vcpkg.git
 
 (Small project for qwinki resume)
