@@ -4,7 +4,7 @@ Simple program on c++, that register user and save all transactions that user di
 Here, in project i use:
  - connection to PostgreSQL (libpqxx)
  - use Docker
- - <vector> lib
+ - "vector" lib
  - map
  - pointers in function
  - etc.
