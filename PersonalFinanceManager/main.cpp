@@ -8,8 +8,7 @@ int main()
 	std::string login;
 	do {
 
-		login = authMenu();
-		if (login == "::exit") return 0;
+		if (!authMenu(login)) return 0;
 
 		std::vector<Transaction> mainDB;
 		OpenDBAndConvertToVector(mainDB, login); 

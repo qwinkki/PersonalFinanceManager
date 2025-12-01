@@ -1,0 +1,75 @@
+[33mcommit 01325813c9d23092282233c864a3ba224026e202[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Sat Nov 29 12:35:55 2025 +0300
+
+    user table initialize
+
+[33mcommit 0083957e1a4a2773f9af09257960bd981031cdb1[m
+Author: qwinki <62250183+qwinkki@users.noreply.github.com>
+Date:   Sat Nov 29 00:12:29 2025 +0300
+
+    Update README.md
+
+[33mcommit 650135a2b6ca89e856c4f835772189305bd08635[m
+Author: qwinki <62250183+qwinkki@users.noreply.github.com>
+Date:   Wed Nov 26 19:44:07 2025 +0300
+
+    Update README.md
+
+[33mcommit b12bda16bdc35f64ec8e1c89d1fd7ed519248f53[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Wed Nov 26 19:40:26 2025 +0300
+
+    connected postgresql
+    add database
+    connect libpqxx by vcpkg
+
+[33mcommit 0f7587a699f9829f893bc417621cf13d6870dd21[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Mon Nov 24 23:13:29 2025 +0300
+
+    integrate authorization to authorization.cpp
+
+[33mcommit 0b495338ab3ae9df90cd65c66cf845f57dae7bad[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Mon Nov 24 17:40:40 2025 +0300
+
+    add addingObj and some else
+
+[33mcommit 679ca36e6a56380c860db7d33a44b810605e7087[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Sun Nov 16 17:21:50 2025 +0300
+
+    added autorization as user
+
+[33mcommit 4accade7037a13baa370ef179de4348045e4e51f[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Thu Nov 13 11:32:37 2025 +0300
+
+    changed Special.cpp
+    changed Special.h
+    changed Transaction.cpp
+    changed Transaction.h
+
+[33mcommit 178f5f5fa99a44f209b5eaedfbdfd41ee073bfcf[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Wed Nov 12 23:02:04 2025 +0300
+
+    new Transaction.cpp
+    new Special.h
+    new Special.cpp
+    changed Transaction.h
+    changed main.h
+    changed main.cpp
+
+[33mcommit 9d8ca445cc6512a319340a69c24806c0a2a48ff3[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Wed Nov 12 22:05:03 2025 +0300
+
+    Add project files.
+
+[33mcommit e65e0f8bba52e9148644466d6c99161588f90ccc[m
+Author: rost7 <rost77.ovchinnikov@gmail.com>
+Date:   Wed Nov 12 22:05:01 2025 +0300
+
+    Add .gitattributes, .gitignore, and README.md.

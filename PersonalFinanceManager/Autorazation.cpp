@@ -1,5 +1,7 @@
 #include "Autorization.h"
 
+//to use without database
+/*
 bool Autorize::registerUser(const std::string& name, const std::string& pass) {
 
 	username = name;
@@ -20,13 +22,14 @@ bool Autorize::login(const std::string& name, const std::string& pass) {
 bool Autorize::hasRegisteredUser() const {
 	return isRegistered;
 }
+*/
 
 
 
-std::string authMenu() {
+bool authMenu(std::string& l) {
 	int authChoice;
-	std::string l, p;
-	Autorize auth;
+	std::string p;
+	
 	while (true) {
 		system("cls");
 		std::cout << std::string(10, '=') << "Autorization" << std::string(10, '=')
@@ -43,13 +46,9 @@ std::string authMenu() {
 			std::cin >> l;
 			std::cout << "Password: ";
 			std::cin >> p;
-			if (auth.login(l, p)) {
-				return l;
-			}
-			else {
-				std::cout << "\n\nwrong password";
-				system("pause");
-			}
+			
+			if (!loginUserFromDatabase(l, p)) 
+				return true;
 		}
 		else if (authChoice == 2) {
 			system("cls");
@@ -58,7 +57,9 @@ std::string authMenu() {
 			std::cout << "Password: ";
 			std::cin >> p;
 
-			auth.registerUser(l, p);
+			if (registerUserAndInsertInDatabase(l, p)) 
+				std::cout << "\n\nUser succesfully registered!\nTable " + l + " with transactions created\n";
+
 			system("pause");
 		}
 		else if (authChoice == 3) {
@@ -82,8 +83,8 @@ std::string authMenu() {
 				}
 			} while (authChoiceSpecial != 3);
 		}
-		else if (authChoice == 4) return "::exit";
+		else if (authChoice == 4) return false;
 		else std::cout << "Wrong choice!";
 	}
-	return "-ERROR";
+	return false;
 }
