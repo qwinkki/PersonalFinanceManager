@@ -46,6 +46,6 @@ void addObjects(std::vector<Transaction>& mainDB) {
 		}
 		std::cout << "\n\nSuccesfully added!";
 	}
-	catch (std::exception e) { std::cout << "err: wrong input!"; }
+	catch (std::exception e) { std::cout << e.what() << '\n'; }
 
 }

@@ -62,7 +62,7 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
             newId++;
             transaction.id = newId;
 
-            std::uniform_int_distribution<int> catDist(0, categories.size() - 1);
+            std::uniform_int_distribution<int> catDist(0, static_cast<int>(categories.size()) - 1);
             transaction.category = categories[catDist(gen)];
 
             transaction.amount = std::round(amountDist(gen) * 100) / 100;
@@ -72,7 +72,7 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
             int year = yearDist(gen);
             transaction.date = std::to_string(day) + "." + std::to_string(month) + "." + std::to_string(year);
 
-            std::uniform_int_distribution<int> descDist(0, descriptions.size() - 1);
+            std::uniform_int_distribution<int> descDist(0, static_cast<int>(descriptions.size()) - 1);
             transaction.description = descriptions[descDist(gen)];
 
             transaction.isIncome = boolDist(gen);

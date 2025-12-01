@@ -49,6 +49,10 @@ bool authMenu(std::string& l) {
 			
 			if (!loginUserFromDatabase(l, p)) 
 				return true;
+			else {
+				std::cout << "\nWrong login or password\n";
+				system("pause");
+			}
 		}
 		else if (authChoice == 2) {
 			system("cls");
@@ -64,24 +68,24 @@ bool authMenu(std::string& l) {
 		}
 		else if (authChoice == 3) {
 			int authChoiceSpecial;
-			do {
+			while(true){
 				system("cls");
-				std::cout << "\n1. Delete User\n"
-					<< "2. Delete Table with Data by User\n"
-					<< "3. Exit\n"
+				std::cout << "1. Delete User\n"
+					<< "2. Delete Data in user Table\n"
+					<< "3. Exit\n\n"
 					<< "Your choice: ";
 				std::cin >> authChoiceSpecial;
 
-				switch (authChoiceSpecial) // do
-				{
-				case 1:
-					break;
-				case 2:
-					break;
-				default:
-					break;
+				
+				if (authChoiceSpecial == 1) deleteUserByName();
+				else if (authChoiceSpecial == 2) {}
+				else if (authChoiceSpecial == 3) break;
+				else {
+					std::cout << "\nEnter number";
+					system("cls");
 				}
-			} while (authChoiceSpecial != 3);
+				
+			}
 		}
 		else if (authChoice == 4) return false;
 		else std::cout << "Wrong choice!";

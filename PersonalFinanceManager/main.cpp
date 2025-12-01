@@ -22,7 +22,7 @@ int main()
 				<< "3. Show All Transactions\n"
 				<< "4. Show Statistics\n"
 				<< "5. Special\n"
-				<< "6. Sava & Exit\n"
+				<< "6. Sava & Exit\n\n"
 				<< "Your choice: ";
 			std::cin >> mainChoice;
 			switch (mainChoice) {

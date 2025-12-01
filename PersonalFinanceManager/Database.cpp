@@ -122,6 +122,61 @@ void createUserTableInDatabase(const std::string& name) {
 	}
 }
 
+void viewAllUsers() {
+	try {
+		pqxx::work w(Database::getInstance());
+		pqxx::result r = w.exec("SELECT id, username FROM users ORDER BY id;");
+
+		system("cls");
+		std::cout << std::string(7, '=') << "Users" << std::string(7, '=') << '\n';
+		if (r.empty()) {
+			std::cout << "\n\nNo users found\n";
+			system("pause");
+		}
+		else
+			for (const auto& row : r) 
+				std::cout << row["id"].as<int>() << "\t" << row["username"].as<std::string>() << '\n';
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+}
+
+void deleteUserByName() {
+	viewAllUsers();
+
+	std::string name, pass;
+	std::cout << "\n\nEnter username to delete: ";
+	std::cin >> name;
+
+	try {
+		pqxx::work w(Database::getInstance());
+		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
+		if (r.empty()) {
+			std::cout << "\n\nWrong username, " << name << " not found\n";
+			system("pause");
+			return;
+		}
+		
+		std::cout << "Enter password of " << name << ": ";
+		std::cin >> pass;
+		if (pass != r[0]["password"].as<std::string>()) {
+			std::cout << "\n\nWrong password\n";
+			system("pause");
+			return;
+		}
+		
+		w.exec("DELETE FROM users WHERE username = " + w.quote(name));
+		w.exec("DROP TABLE IF EXISTS " + w.conn().quote_name(name));
+		w.commit();
+		std::cout << "User " << name << " with id " << r[0]["id"].as<int>() << " deleted\n";
+		system("pause");
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+}
+
 
 
 
