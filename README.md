@@ -4,7 +4,7 @@ Simple program on c++, that register user and save all transactions that user di
 Here, in project i use:
  - connection to PostgreSQL (libpqxx)
  - use Docker
- - <vector> lib
+ - "vector" lib
  - map
  - pointers in function
  - etc.
@@ -25,7 +25,7 @@ To run the project follow steps:
 
 
 
-*libpqxx - .h, .lib, .hxx and so on files to connect PostgreSQL in c++ language
-*vcpkg - to download vcpkg use git: git clone https://github.com/microsoft/vcpkg.git
+> - *libpqxx - .h, .lib, .hxx and so on files to connect PostgreSQL in c++ language
+> - *vcpkg - to download vcpkg use git: git clone https://github.com/microsoft/vcpkg.git
 
 (Small project for qwinki resume)
