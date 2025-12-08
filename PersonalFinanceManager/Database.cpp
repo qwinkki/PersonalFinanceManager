@@ -54,7 +54,7 @@ Database::Database() {
 void initializeUserDatabase() {
 	try {
 		pqxx::work w(Database::getInstance());
-		w.exec("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL);");
+		w.exec("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, date TIMESTAMP DEFAULT DATE_TRUNC('SECOND', CURRENT_TIMESTAMP));");
 		w.commit();
 		std::cout << "Succesfully initialize user table in database.\n";
 	}
@@ -125,7 +125,7 @@ void createUserTableInDatabase(const std::string& name) {
 void viewAllUsers() {
 	try {
 		pqxx::work w(Database::getInstance());
-		pqxx::result r = w.exec("SELECT id, username FROM users ORDER BY id;");
+		pqxx::result r = w.exec("SELECT id, username, date FROM users ORDER BY id;");
 
 		system("cls");
 		std::cout << std::string(7, '=') << "Users" << std::string(7, '=') << '\n';
@@ -135,7 +135,7 @@ void viewAllUsers() {
 		}
 		else
 			for (const auto& row : r) 
-				std::cout << row["id"].as<int>() << "\t" << row["username"].as<std::string>() << '\n';
+				std::cout << row["id"].as<int>() << "\t" << row["username"].as<std::string>() << "\tDate Registration: " << row["date"].as<std::string>() << '\n';
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
@@ -146,7 +146,7 @@ void deleteUserByName() {
 	viewAllUsers();
 
 	std::string name, pass;
-	std::cout << "\n\nEnter username to delete: ";
+	std::cout << "\nEnter username to delete: ";
 	std::cin >> name;
 
 	try {
@@ -169,7 +169,7 @@ void deleteUserByName() {
 		w.exec("DELETE FROM users WHERE username = " + w.quote(name));
 		w.exec("DROP TABLE IF EXISTS " + w.conn().quote_name(name));
 		w.commit();
-		std::cout << "User " << name << " with id " << r[0]["id"].as<int>() << " deleted\n";
+		std::cout << "User " << name << " with id " << r[0]["id"].as<int>() << " deleted\n\n";
 		system("pause");
 	}
 	catch (const std::exception& e) {
