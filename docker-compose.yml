@@ -1,17 +1,14 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres
-    restart: always
+  postgres:
+    image: postgres:13
     environment:
+      POSTGRES_DB: PersonalFinanceManager
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
-      POSTGRES_DB: PersonalFinanceManager
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  db_data:
+  postgres_data:
