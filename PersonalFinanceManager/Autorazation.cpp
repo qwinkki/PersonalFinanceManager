@@ -48,6 +48,7 @@ namespace {
 }
 
 
+
 bool loginUserFromDatabase(const std::string& name, const std::string& pass) {
 	try {
 		pqxx::work w(Database::getInstance());
@@ -95,7 +96,7 @@ void createUserTableInDatabase(const std::string& name) {
 			" (id SERIAL PRIMARY KEY, "
 			"category VARCHAR(255) NOT NULL, "
 			"amount DECIMAL(12, 2) NOT NULL, "
-			"date DATE NOT NULL, "
+			"date VARCHAR(255) DEFAULT '', "
 			"description TEXT DEFAULT '', "
 			"is_income BOOLEAN NOT NULL DEFAULT false);";
 
@@ -161,5 +162,39 @@ void deleteUserByName() {
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
+	}
+}
+
+void ClearUserTable() {
+	if (!viewAllUsers()) return;
+
+	std::cout << "\nEnter username to delete all trunsaction: ";
+	std::string name, pass;
+	std::cin >> name;
+
+	try {
+		pqxx::work w(Database::getInstance());
+		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
+		if (r.empty()) {
+			std::cout << "\n\nWrong username, " << name << " not found\n";
+			system("pause");
+			return;
+		}
+
+		std::cout << "Enter password of " << name << ": ";
+		std::cin >> pass;
+		if (pass != r[0]["password"].as<std::string>()) {
+			std::cout << "\n\nWrong password\n";
+			system("pause");
+			return;
+		}
+
+		w.exec("DELETE FROM " + w.quote_name(name) + ";");
+		w.commit();
+		std::cout << "All " << name << " transactions with id " << r[0]["id"].as<int>() << " are deleted\n";
+		system("pause");
+	}
+	catch (std::exception& e) {
+		std::cerr << e.what();
 	}
 }

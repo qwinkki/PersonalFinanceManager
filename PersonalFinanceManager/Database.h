@@ -16,3 +16,4 @@ public:
 void initializeUserDatabase();
 
 void OpenDBAndConvertToVector(std::vector<Transaction>& mainDB, std::string tableName);
+void CloseAndSaveDB(const std::vector<Transaction>& mainDB, const std::string& tableName);

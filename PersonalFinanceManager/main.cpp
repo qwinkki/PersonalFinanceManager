@@ -59,7 +59,7 @@ int main()
 
 
 					if (authChoiceSpecial == 1) deleteUserByName();
-					else if (authChoiceSpecial == 2) {}
+					else if (authChoiceSpecial == 2) ClearUserTable();
 					else if (authChoiceSpecial == 3) break;
 					else {
 						std::cout << "\nEnter number";
@@ -73,8 +73,8 @@ int main()
 		} while (!isAuthorized);
 
 		std::vector<Transaction> mainDB;
-		OpenDBAndConvertToVector(mainDB, l);
-		l = "";
+		std::string loggedInUser = l;
+		OpenDBAndConvertToVector(mainDB, loggedInUser);
 
 		int mainChoice;
 		do {
@@ -103,9 +103,11 @@ int main()
 				Special(mainDB);
 				break;
 			case 6:
-				// exit and save db
-				isAuthorized = false;
+				CloseAndSaveDB(mainDB, loggedInUser);
 				mainDB.clear();
+				l = "";
+				loggedInUser = "";
+				isAuthorized = false;
 				break;
 			default:
 				std::cout << "\n\nWrong choice!";

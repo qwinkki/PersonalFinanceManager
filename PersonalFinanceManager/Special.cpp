@@ -31,13 +31,13 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
     std::cout << "Choose how much new Transactions you need: ";
     std::cin >> countTr;
 
-    
+
     int newId = mainDB.size() > 0 ? mainDB[mainDB.size() - 1].id : 0;
 
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<double> amountDist(10.0, 10000.0);
-    std::uniform_int_distribution<int> dayDist(1, 28);
+    std::uniform_int_distribution<int> dayDist(1, 28); 
     std::uniform_int_distribution<int> monthDist(1, 12);
     std::uniform_int_distribution<int> yearDist(2020, 2024);
     std::uniform_int_distribution<int> boolDist(0, 1);
@@ -70,7 +70,10 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
             int day = dayDist(gen);
             int month = monthDist(gen);
             int year = yearDist(gen);
-            transaction.date = std::to_string(day) + "." + std::to_string(month) + "." + std::to_string(year);
+
+            char dateBuffer[11];
+            snprintf(dateBuffer, sizeof(dateBuffer), "%04d-%02d-%02d", year, month, day);
+            transaction.date = dateBuffer;
 
             std::uniform_int_distribution<int> descDist(0, static_cast<int>(descriptions.size()) - 1);
             transaction.description = descriptions[descDist(gen)];
