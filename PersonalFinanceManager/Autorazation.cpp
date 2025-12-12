@@ -49,6 +49,33 @@ namespace {
 
 
 
+bool checkCorrectLogAndPass(std::string& name, std::string& pass) {
+	std::cout << "\nEnter username: ";
+	std::cin >> name;
+	
+	try {
+		pqxx::work w(Database::getInstance());
+		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
+		if (r.empty()) {
+			std::cout << "\nWrong username, " << name << " not found\n";
+			system("pause");
+			return false;
+		}
+
+		std::cout << "Enter password of " << name << ": ";
+		std::cin >> pass;
+		if (pass != r[0]["password"].as<std::string>()) {
+			std::cout << "\nWrong password\n";
+			system("pause");
+			return false;
+		}
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+	return true;
+}
+
 bool loginUserFromDatabase(const std::string& name, const std::string& pass) {
 	try {
 		pqxx::work w(Database::getInstance());
@@ -134,25 +161,12 @@ void deleteUserByName() {
 	if (!viewAllUsers()) return;
 
 	std::string name, pass;
-	std::cout << "\nEnter username to delete: ";
-	std::cin >> name;
+	if (!checkCorrectLogAndPass(name, pass)) return;
 
 	try {
 		pqxx::work w(Database::getInstance());
 		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
-		if (r.empty()) {
-			std::cout << "\n\nWrong username, " << name << " not found\n";
-			system("pause");
-			return;
-		}
-
-		std::cout << "Enter password of " << name << ": ";
-		std::cin >> pass;
-		if (pass != r[0]["password"].as<std::string>()) {
-			std::cout << "\n\nWrong password\n";
-			system("pause");
-			return;
-		}
+		
 
 		w.exec("DELETE FROM users WHERE username = " + w.quote(name));
 		w.exec("DROP TABLE IF EXISTS " + w.conn().quote_name(name));
@@ -168,23 +182,14 @@ void deleteUserByName() {
 void ClearUserTable() {
 	if (!viewAllUsers()) return;
 
-	std::cout << "\nEnter username to delete all trunsaction: ";
 	std::string name, pass;
-	std::cin >> name;
+	if (!checkCorrectLogAndPass(name, pass)) return;
 
 	try {
 		pqxx::work w(Database::getInstance());
 		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
 		if (r.empty()) {
 			std::cout << "\n\nWrong username, " << name << " not found\n";
-			system("pause");
-			return;
-		}
-
-		std::cout << "Enter password of " << name << ": ";
-		std::cin >> pass;
-		if (pass != r[0]["password"].as<std::string>()) {
-			std::cout << "\n\nWrong password\n";
 			system("pause");
 			return;
 		}
