@@ -50,11 +50,11 @@ namespace {
 
 
 bool checkCorrectLogAndPass(std::string& name, std::string& pass) {
-	std::cout << "\nEnter username: ";
-	std::cin >> name;
-	
 	try {
 		pqxx::work w(Database::getInstance());
+
+		std::cout << "\nEnter username: ";
+		std::cin >> name;
 		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
 		if (r.empty()) {
 			std::cout << "\nWrong username, " << name << " not found\n";
