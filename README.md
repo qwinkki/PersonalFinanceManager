@@ -32,10 +32,10 @@ To run the project follow steps:
 
 
 # Problems that could be
-> - **if after 5 step you cant connect to database and project say that database 'PersonalFinanceManager dont exist':
-> - 1. start cmd as administrator and write commands:
->   2. netstat -aon | findstr :5432
->   3. taskkill /PID (id of port) /F
+ ** if after 5 step you cant connect to database and project say that database 'PersonalFinanceManager dont exist':
+   1. start cmd as administrator and write commands:
+   2. netstat -aon | findstr :5432
+   3. taskkill /PID (id of port) /F
 > <img width="634" height="107" alt="image" src="https://github.com/user-attachments/assets/c7d7c2d2-ead3-462a-9cda-cfe85384f4fc" />
 
 
