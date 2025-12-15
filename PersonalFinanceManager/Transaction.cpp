@@ -3,46 +3,49 @@
 void ShowAllTransactions(std::vector<Transaction> Transactions) {
 	system("cls");
 	for (const auto& subTransactions : Transactions)
-		std::cout << "id: " << subTransactions.id
-		<< "\ncategory: " << subTransactions.category
-		<< "\namount: " << subTransactions.amount
-		<< "\ndate: " << subTransactions.date
-		<< "\ndescription: " << subTransactions.description
-		<< (subTransactions.isIncome ? "\nThis is income" : "\nThis isn't income") << "\n\n";
+		std::cout << subTransactions;
 	system("pause");
 }
 
 void addObjects(std::vector<Transaction>& mainDB) {
 	system("cls");
-	Transaction tr;
 	int howMuch;
 	std::cout << "How much do you need transactions: ";
 	std::cin >> howMuch;
 	if (std::cin.fail()) 
 	{
-		std::cout << "wrong input";
+		std::cout << "\nwrong input";
 		return;
 	}
+
+	int id;
+	std::string category;
+	double amount;
+	std::string date;
+	std::string description;
+	bool isIncome;
+
+	char isIncomeInput;
+
 	try {
 		for (int i = 0; i < howMuch; i++) {
 			if (mainDB.size() > 0)
-				tr.id = mainDB[mainDB.size() - 1].id + 1;
-			else tr.id = 1;
-			std::cout << "\n\nid: " << tr.id << "\ncategory: ";
-			std::cin >> tr.category;
+				id = mainDB[mainDB.size() - 1].getId() + 1;
+			else id = 1;
+			std::cout << "\n\nid: " << id << "\ncategory: ";
+			std::cin >> category;
 			std::cout << "amount: ";
-			std::cin >> tr.amount;
+			std::cin >> amount;
 			std::cout << "date: ";
-			std::cin >> tr.date;
+			std::cin >> date;
 			std::cout << "description: ";
-			std::cin >> tr.description;
+			std::cin >> description;
 			std::cout << "is it income? (y/n): ";
-			char isIncome;
-			std::cin >> isIncome;
-			if (isIncome == 'y') tr.isIncome = true;
-			else if (isIncome == 'n') tr.isIncome = false;
+			std::cin >> isIncomeInput;
+			if (isIncomeInput == 'y') isIncome = true;
+			else if (isIncomeInput == 'n') isIncome = false;
 
-			mainDB.push_back(tr);
+			mainDB.push_back(Transaction(id, category, amount, date, description, isIncome));
 		}
 		std::cout << "\n\nSuccesfully added!";
 	}

@@ -32,7 +32,7 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
     std::cin >> countTr;
 
 
-    int newId = mainDB.size() > 0 ? mainDB[mainDB.size() - 1].id : 0;
+    int newId = mainDB.size() > 0 ? mainDB[mainDB.size() - 1].getId() : 0;
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -55,17 +55,23 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
         "Bonus", "Freelance work", "Investment return"
     };
 
+    int id;
+    std::string category;
+    double amount;
+    std::string date;
+    std::string description;
+    bool isIncome;
+
     try {
         for (int i = 0; i < countTr; i++) {
-            Transaction transaction;
 
             newId++;
-            transaction.id = newId;
+            id = newId;
 
             std::uniform_int_distribution<int> catDist(0, static_cast<int>(categories.size()) - 1);
-            transaction.category = categories[catDist(gen)];
+            category = categories[catDist(gen)];
 
-            transaction.amount = std::round(amountDist(gen) * 100) / 100;
+            amount = std::round(amountDist(gen) * 100) / 100;
 
             int day = dayDist(gen);
             int month = monthDist(gen);
@@ -73,15 +79,15 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
 
             char dateBuffer[11];
             snprintf(dateBuffer, sizeof(dateBuffer), "%04d-%02d-%02d", year, month, day);
-            transaction.date = dateBuffer;
+            date = dateBuffer;
 
             std::uniform_int_distribution<int> descDist(0, static_cast<int>(descriptions.size()) - 1);
-            transaction.description = descriptions[descDist(gen)];
+            description = descriptions[descDist(gen)];
 
-            transaction.isIncome = boolDist(gen);
+            isIncome = boolDist(gen);
 
-            newEl.push_back(transaction);
-            std::cout << "Created new Transaction with id: " << transaction.id << '\n';
+            newEl.push_back(Transaction(id, category, amount, date, description, isIncome));
+            std::cout << "Created new Transaction with id: " << id << '\n';
         }
     }
     catch (const std::exception& e) {
