@@ -1,7 +1,6 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include <vector>
+#include "common.h"
+
 #include <stdexcept>
 
 class Transaction {

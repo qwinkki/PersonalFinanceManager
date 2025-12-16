@@ -31,7 +31,7 @@ bool checkCorrectLogAndPass(std::string& name, std::string& pass) {
 		std::cin >> name;
 		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
 		if (r.empty()) {
-			std::cout << "\nWrong username, " << name << " not found\n";
+			std::cout << COLORYELLOW << "\nWrong username, " << name << " not found\n" << COLORDEFAULT;
 			system("pause");
 			return false;
 		}
@@ -39,7 +39,7 @@ bool checkCorrectLogAndPass(std::string& name, std::string& pass) {
 		std::cout << "Enter password of " << name << ": ";
 		std::cin >> pass;
 		if (pass != r[0]["password"].as<std::string>()) {
-			std::cout << "\nWrong password\n";
+			std::cout << COLORYELLOW << "\nWrong password\n" << COLORDEFAULT;
 			system("pause");
 			return false;
 		}
@@ -64,12 +64,12 @@ bool loginUserFromDatabase(const std::string& name, const std::string& pass) {
 
 bool registerUserAndInsertInDatabase(const std::string& name, const std::string& pass) {
 	if (!isValid(name)) {
-		std::cout << "Username contains special characters\n";
+		std::cout << COLORYELLOW << "Username contains special characters\n" << COLORDEFAULT;
 		return false;
 	}
 
 	if (userExistsInDatabase(name)) {
-		std::cout << "User already exists\n";
+		std::cout << COLORYELLOW << "User already exists\n" << COLORDEFAULT;
 		return false;
 	}
 
@@ -178,14 +178,14 @@ void ClearUserTable() {
 	}
 }
 
-bool resetEverything() {
+void resetEverything() {
 	system("cls");
 	std::string sure;
 	std::cout << "Are you sure that you want to reset program? (y/n): ";
 	std::cin >> sure;
-	if (sure == "n" || sure == "N") return false;
+	if (sure == "n" || sure == "N") return;
 	else if (sure == "y" || sure == "Y") {
-		if (!viewAllUsers()) return true;
+		if (!viewAllUsers()) return;
 
 		try {
 			pqxx::work w(Database::getInstance());
@@ -194,25 +194,23 @@ bool resetEverything() {
 			for (const auto& item : r) {
 				w.exec("DROP TABLE IF EXISTS " + w.conn().quote_name(item["username"].as<std::string>()));
 
-				std::cout << "\nuser: " << item["username"].as<std::string>() << " with id: " << item["id"].as<std::string>() << " - delete... " << COLORGREEN << "OK" << COLORDEFAULT;
-				std::cout << "\ntable with name: " << item["username"].as<std::string>() << " - delete... " << COLORGREEN << "OK" << COLORDEFAULT;
+				std::cout << "\nuser: " << item["username"].as<std::string>() << " with id: " << item["id"].as<std::string>() << " - deleting.. " << COLORGREEN << "OK" << COLORDEFAULT;
+				std::cout << "\ntable with name: " << item["username"].as<std::string>() << " - deleting.. " << COLORGREEN << "OK" << COLORDEFAULT;
 			}
 			w.exec("DROP TABLE IF EXISTS users;");
 
-			std::cout << "\nall users deleted\ndeleting 'users' table - delete... " << COLORGREEN << "OK" << COLORDEFAULT;
+			std::cout << "\nall users deleted\ndeleting 'users' table - deleting.. " << COLORGREEN << "OK" << COLORDEFAULT;
 
 			std::cout << '\n';
 			w.commit();
-			return true;
+			exit(0);
 		}
 		catch (const std::exception& e) {
 			std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
-			return false;
+			return;
 		}
 	}
-	else {
-		std::cout << "\nWrong input, try again\n";
-	}
+	else
+		std::cout << COLORYELLOW << "\nWrong input, try again\n" << COLORDEFAULT;
 	system("pause");
-	return false;
 }

@@ -14,7 +14,7 @@ void addObjects(std::vector<Transaction>& mainDB) {
 	std::cin >> howMuch;
 	if (std::cin.fail()) 
 	{
-		std::cout << "\nwrong input";
+		std::cout << COLORYELLOW << "\nwrong input" << COLORDEFAULT;
 		return;
 	}
 
@@ -25,7 +25,7 @@ void addObjects(std::vector<Transaction>& mainDB) {
 	std::string description;
 	bool isIncome;
 
-	char isIncomeInput;
+	std::string isIncomeInput;
 
 	try {
 		for (int i = 0; i < howMuch; i++) {
@@ -40,15 +40,17 @@ void addObjects(std::vector<Transaction>& mainDB) {
 			std::cin >> date;
 			std::cout << "description: ";
 			std::cin >> description;
-			std::cout << "is it income? (y/n): ";
+			std::cout << "is it income? (y/n default: n): ";
 			std::cin >> isIncomeInput;
-			if (isIncomeInput == 'y') isIncome = true;
-			else if (isIncomeInput == 'n') isIncome = false;
+			if (isIncomeInput == "y" || isIncomeInput == "Y") isIncome = true;
+			else if (isIncomeInput == "n" || isIncomeInput == "N") isIncome = false;
 
 			mainDB.push_back(Transaction(id, category, amount, date, description, isIncome));
 		}
-		std::cout << "\n\nSuccesfully added!";
+		std::cout << COLORGREEN << "\n\nSuccesfully added!" << COLORDEFAULT;
 	}
-	catch (std::exception e) { std::cout << e.what() << '\n'; }
+	catch (std::exception e) { 
+		std::cout << COLORRED << e.what() << '\n' << COLORDEFAULT; 
+	}
 
 }

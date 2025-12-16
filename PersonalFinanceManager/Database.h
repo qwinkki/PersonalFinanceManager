@@ -1,14 +1,9 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <iostream>
+#include "common.h"
+
 #include "Transaction.h"
 
 #include <pqxx/pqxx>
-
-#define COLORGREEN "\033[32m"
-#define COLORRED "\033[31m"
-#define COLORDEFAULT "\033[0m"
 
 class Database {
 	Database();

@@ -8,12 +8,12 @@ pqxx::connection& Database::getInstance() {
 std::unique_ptr<pqxx::connection> Database::conn = nullptr;
 Database::Database() {
 	system("cls");
-	std::cout << "Start connection to Database\n";
+	std::cout << "start connecting to Database\n";
 	if(!conn)
 		try {
 			conn = std::make_unique<pqxx::connection>("postgresql://postgres:123@localhost:5432/PersonalFinanceManager");
 			if (conn->is_open())
-				std::cout << COLORGREEN << "Database opened\n" << COLORDEFAULT;
+				std::cout << "database opening.. " << COLORGREEN << "OK\n" << COLORDEFAULT;
 			else {
 				std::cout << COLORRED << "ERROR: Database in not opened\n" << COLORDEFAULT;
 				exit(1);
@@ -31,7 +31,7 @@ void initializeUserDatabase() {
 		pqxx::work w(Database::getInstance());
 		w.exec("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, date TIMESTAMP DEFAULT DATE_TRUNC('SECOND', CURRENT_TIMESTAMP));");
 		w.commit();
-		std::cout << "Succesfully initialize user table in database.\n";
+		std::cout << "initializing user table in database.. " << COLORGREEN << "OK\n" << COLORDEFAULT;
 	}
 	catch (const std::exception& e) {
 		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;

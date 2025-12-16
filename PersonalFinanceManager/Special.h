@@ -1,8 +1,7 @@
 #pragma once
+#include "common.h"
+
 #include "Transaction.h"
-#include <iostream>
-#include <vector>
-#include <string>
 #include <random>
 #include <ctime>
 

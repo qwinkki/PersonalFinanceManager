@@ -2,7 +2,6 @@
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");
 	initializeUserDatabase(); // creating if dont exist user table
 	system("pause");
 
@@ -30,7 +29,7 @@ int main()
 				std::cin >> p;
 
 				if (loginUserFromDatabase(l, p)) {
-					std::cout << "\nWrong login or password\n";
+					std::cout << COLORYELLOW << "\nWrong login or password\n" << COLORDEFAULT;
 					system("pause");
 				}
 				else isAuthorized = true;
@@ -62,7 +61,7 @@ int main()
 
 					if (authChoiceSpecial == "1") deleteUserByName();
 					else if (authChoiceSpecial == "2") ClearUserTable();
-					else if (authChoiceSpecial == "3") { if (resetEverything()) return 1; }
+					else if (authChoiceSpecial == "3") resetEverything();
 					else if (authChoiceSpecial == "4") break;
 					else {
 						std::cout << "\nEnter number";
@@ -72,7 +71,7 @@ int main()
 				}
 			}
 			else if (authChoice == "4") { system("cls"); return 0; }
-			else std::cout << "Wrong choice!";
+			else std::cout << COLORYELLOW << "Wrong input" << COLORDEFAULT;
 		} while (!isAuthorized);
 
 		std::vector<Transaction> mainDB;
@@ -107,7 +106,7 @@ int main()
 				loggedInUser = "";
 				isAuthorized = false;
 			}
-			else std::cout << "\n\nWrong choice!";
+			else std::cout << COLORYELLOW << "\n\nWrong input" << COLORDEFAULT;
 			system("cls");
 		} while (mainChoice != "6");
 	} while (true);

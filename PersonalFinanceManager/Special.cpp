@@ -87,11 +87,11 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
             isIncome = boolDist(gen);
 
             newEl.push_back(Transaction(id, category, amount, date, description, isIncome));
-            std::cout << "Created new Transaction with id: " << id << '\n';
+            std::cout << "Creating new Transaction with id: " << id << ".. " << COLORGREEN << "OK\n" << COLORDEFAULT;
         }
     }
     catch (const std::exception& e) {
-        std::cout << "\n\nNot succesfully generated: " << e.what() << "\n\n";
+        std::cout << COLORRED << e.what() << "\n" << COLORDEFAULT;
     }
 
     std::cout << "\n\nSuccesfully generated!\n\n";
@@ -103,7 +103,9 @@ void deleteAllTransitions(std::vector<Transaction>& Transactions) {
     system("cls");
     std::cout << "Size transformered: " << Transactions.size() << " => ";
     Transactions.clear();
-    std::cout << Transactions.size() << '\n'
-        << (Transactions.size() == 0 ? "Succesfully cleared!\n\n" : "Err: Not Cleared.\n\n");
+    std::cout << Transactions.size() << '\n';
+        if (Transactions.size() == 0)
+            std::cout << COLORGREEN << "succesfully cleared\n" << COLORDEFAULT;
+        else std::cout << COLORRED << "ERR: Not succesfully cleared\n" << COLORDEFAULT;
     system("pause");
 }
