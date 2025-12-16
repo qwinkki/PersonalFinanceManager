@@ -6,6 +6,10 @@
 
 #include <pqxx/pqxx>
 
+#define COLORGREEN "\033[32m"
+#define COLORRED "\033[31m"
+#define COLORDEFAULT "\033[0m"
+
 class Database {
 	Database();
 	static std::unique_ptr<pqxx::connection> conn;

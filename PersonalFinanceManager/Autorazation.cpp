@@ -15,7 +15,7 @@ namespace {
 			return !r.empty();
 		}
 		catch (const std::exception& e) {
-			std::cerr << e.what() << '\n';
+			std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 			return false;
 		}
 	}
@@ -45,7 +45,7 @@ bool checkCorrectLogAndPass(std::string& name, std::string& pass) {
 		}
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 	return true;
 }
@@ -57,7 +57,7 @@ bool loginUserFromDatabase(const std::string& name, const std::string& pass) {
 		return r.empty();
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 		return false;
 	}
 }
@@ -83,7 +83,7 @@ bool registerUserAndInsertInDatabase(const std::string& name, const std::string&
 		return true;
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 		return false;
 	}
 }
@@ -105,7 +105,7 @@ void createUserTableInDatabase(const std::string& name) {
 		w.commit();
 	}
 	catch (const std::exception& e) {
-		std::cerr << "Error creating table: " << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 }
 
@@ -126,7 +126,7 @@ bool viewAllUsers() {
 				std::cout << row["id"].as<int>() << "\t" << row["username"].as<std::string>() << "\tDate Registration: " << row["date"].as<std::string>() << '\n';
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 	return true;
 }
@@ -149,7 +149,7 @@ void deleteUserByName() {
 		system("pause");
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 }
 
@@ -174,6 +174,45 @@ void ClearUserTable() {
 		system("pause");
 	}
 	catch (std::exception& e) {
-		std::cerr << e.what();
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
+}
+
+bool resetEverything() {
+	system("cls");
+	std::string sure;
+	std::cout << "Are you sure that you want to reset program? (y/n): ";
+	std::cin >> sure;
+	if (sure == "n" || sure == "N") return false;
+	else if (sure == "y" || sure == "Y") {
+		if (!viewAllUsers()) return true;
+
+		try {
+			pqxx::work w(Database::getInstance());
+			pqxx::result r = w.exec("SELECT id, username FROM users ORDER BY id;");
+
+			for (const auto& item : r) {
+				w.exec("DROP TABLE IF EXISTS " + w.conn().quote_name(item["username"].as<std::string>()));
+
+				std::cout << "\nuser: " << item["username"].as<std::string>() << " with id: " << item["id"].as<std::string>() << " - delete... " << COLORGREEN << "OK" << COLORDEFAULT;
+				std::cout << "\ntable with name: " << item["username"].as<std::string>() << " - delete... " << COLORGREEN << "OK" << COLORDEFAULT;
+			}
+			w.exec("DROP TABLE IF EXISTS users;");
+
+			std::cout << "\nall users deleted\ndeleting 'users' table - delete... " << COLORGREEN << "OK" << COLORDEFAULT;
+
+			std::cout << '\n';
+			w.commit();
+			return true;
+		}
+		catch (const std::exception& e) {
+			std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
+			return false;
+		}
+	}
+	else {
+		std::cout << "\nWrong input, try again\n";
+	}
+	system("pause");
+	return false;
 }

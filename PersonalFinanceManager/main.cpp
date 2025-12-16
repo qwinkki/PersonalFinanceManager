@@ -6,8 +6,8 @@ int main()
 	initializeUserDatabase(); // creating if dont exist user table
 	system("pause");
 
-	int authChoice;
-	bool isAuthorized;
+	std::string authChoice;
+	bool isAuthorized = false;
 	do {
 
 		std::string l, p;
@@ -22,7 +22,7 @@ int main()
 				<< "Your choice: ";
 			std::cin >> authChoice;
 
-			if (authChoice == 1) {
+			if (authChoice == "1") {
 				system("cls");
 				std::cout << "Login: ";
 				std::cin >> l;
@@ -35,7 +35,7 @@ int main()
 				}
 				else isAuthorized = true;
 			}
-			else if (authChoice == 2) {
+			else if (authChoice == "2") {
 				system("cls");
 				std::cout << "Create user\nLogin: ";
 				std::cin >> l;
@@ -47,20 +47,23 @@ int main()
 
 				system("pause");
 			}
-			else if (authChoice == 3) {
-				int authChoiceSpecial;
+			else if (authChoice == "3") {
+				std::string authChoiceSpecial;
+
 				while (true) {
 					system("cls");
 					std::cout << "1. Delete User\n"
 						<< "2. Delete Data in user Table\n"
-						<< "3. Exit\n\n"
+						<< "3. Reset everything\n"
+						<< "4. Exit\n\n"
 						<< "Your choice: ";
 					std::cin >> authChoiceSpecial;
 
 
-					if (authChoiceSpecial == 1) deleteUserByName();
-					else if (authChoiceSpecial == 2) ClearUserTable();
-					else if (authChoiceSpecial == 3) break;
+					if (authChoiceSpecial == "1") deleteUserByName();
+					else if (authChoiceSpecial == "2") ClearUserTable();
+					else if (authChoiceSpecial == "3") { if (resetEverything()) return 1; }
+					else if (authChoiceSpecial == "4") break;
 					else {
 						std::cout << "\nEnter number";
 						system("cls");
@@ -68,7 +71,7 @@ int main()
 
 				}
 			}
-			else if (authChoice == 4) { system("cls"); return 0; }
+			else if (authChoice == "4") { system("cls"); return 0; }
 			else std::cout << "Wrong choice!";
 		} while (!isAuthorized);
 
@@ -76,7 +79,7 @@ int main()
 		std::string loggedInUser = l;
 		OpenDBAndConvertToVector(mainDB, loggedInUser);
 
-		int mainChoice;
+		std::string mainChoice;
 		do {
 			system("cls");
 			std::cout << std::string(7, '=') << "Personal Finance Manager" << std::string(7, '=') << '\n'
@@ -88,33 +91,25 @@ int main()
 				<< "6. Sava & Exit\n\n"
 				<< "Your choice: ";
 			std::cin >> mainChoice;
-			switch (mainChoice) {
-			case 1:
+
+			if(mainChoice == "1")
 				addObjects(mainDB);
-				break;
-			case 2:
-				break;
-			case 3:
+			else if (mainChoice == "2") {}
+			else if (mainChoice == "3")
 				ShowAllTransactions(mainDB);
-				break;
-			case 4:
-				break;
-			case 5:
+			else if (mainChoice == "4") {}
+			else if (mainChoice == "5")
 				Special(mainDB);
-				break;
-			case 6:
+			else if (mainChoice == "6") {
 				CloseAndSaveDB(mainDB, loggedInUser);
 				mainDB.clear();
 				l = "";
 				loggedInUser = "";
 				isAuthorized = false;
-				break;
-			default:
-				std::cout << "\n\nWrong choice!";
-				break;
 			}
+			else std::cout << "\n\nWrong choice!";
 			system("cls");
-		} while (mainChoice != 6);
+		} while (mainChoice != "6");
 	} while (true);
 
 	system("cls");

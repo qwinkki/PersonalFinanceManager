@@ -13,14 +13,14 @@ Database::Database() {
 		try {
 			conn = std::make_unique<pqxx::connection>("postgresql://postgres:123@localhost:5432/PersonalFinanceManager");
 			if (conn->is_open())
-				std::cout << "Database opened\n";
+				std::cout << COLORGREEN << "Database opened\n" << COLORDEFAULT;
 			else {
-				std::cout << "ERROR: Database in not opened\n";
+				std::cout << COLORRED << "ERROR: Database in not opened\n" << COLORDEFAULT;
 				exit(1);
 			}
 		}
 		catch (const std::exception& e) {
-			std::cerr << e.what() << std::endl;
+			std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 			exit(1);
 		}
 }
@@ -34,7 +34,7 @@ void initializeUserDatabase() {
 		std::cout << "Succesfully initialize user table in database.\n";
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 }
 
@@ -67,7 +67,7 @@ void OpenDBAndConvertToVector(std::vector<Transaction>& mainDB, std::string tabl
 			}
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 }
 
@@ -78,7 +78,7 @@ void CloseAndSaveDB(const std::vector<Transaction>& mainDB, const std::string& t
 
 	try {
 		pqxx::work w(Database::getInstance());
-		w.exec("DELETE FROM " + w.quote_name(tableName) + ";");
+		w.exec("TRUNCATE TABLE " + w.quote_name(tableName) + " RESTART IDENTITY;");
 
 		for (const auto& t : mainDB) {
 			w.exec("INSERT INTO " + w.quote_name(tableName) +
@@ -93,6 +93,6 @@ void CloseAndSaveDB(const std::vector<Transaction>& mainDB, const std::string& t
 		w.commit();
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << '\n';
+		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
 	}
 }
