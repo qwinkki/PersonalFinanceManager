@@ -33,6 +33,8 @@ public:
 		}
     }
 
+	void setId(int newId) { id = newId; }
+
 	int getId() const { return id; }
 	const std::string& getCategory() const { return category; }
 	double getAmount() const { return amount; }
@@ -55,3 +57,4 @@ inline std::ostream& operator<<(std::ostream& os, const Transaction& transaction
 
 void ShowAllTransactions(std::vector<Transaction> Transactions);
 void addObjects(std::vector<Transaction>& mainDB);
+void deleteItem(std::vector<Transaction>& mainDB);

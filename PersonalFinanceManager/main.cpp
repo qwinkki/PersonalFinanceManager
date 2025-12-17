@@ -91,11 +91,14 @@ int main()
 				<< "Your choice: ";
 			std::cin >> mainChoice;
 
-			if(mainChoice == "1")
+			if (mainChoice == "1")
 				addObjects(mainDB);
-			else if (mainChoice == "2") {}
-			else if (mainChoice == "3")
+			else if (mainChoice == "2")
+				deleteItem(mainDB);
+			else if (mainChoice == "3") {
 				ShowAllTransactions(mainDB);
+				system("pause");
+			}
 			else if (mainChoice == "4") {}
 			else if (mainChoice == "5")
 				Special(mainDB);
