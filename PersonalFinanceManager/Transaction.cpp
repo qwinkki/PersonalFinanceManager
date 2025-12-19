@@ -1,7 +1,7 @@
 #include "Transaction.h"
 
 void checkIdVector(std::vector<Transaction>& mainDB) {
-	for (std::size_t i = 0; i < mainDB.size(); i++) {
+	for (int i = 0; i < mainDB.size(); i++) {
 		mainDB[i].setId(i + 1);
 	}
 }
@@ -92,4 +92,40 @@ void deleteItem(std::vector<Transaction>& mainDB) {
 	else
 		std::cout << COLORYELLOW << "not deleted\n" << COLORDEFAULT;
 	system("pause");
+}
+
+TransactionMap buildTransactionMap(const std::vector<Transaction>& mainDB) {
+	TransactionMap map;
+
+	for (const auto& t : mainDB)
+		map.add(t);
+
+	return map;
+}
+
+void showStatistics(std::vector<Transaction>& mainDB) {
+	while (true) {
+		system("cls");
+		std::cout << "1. sort by"
+			<< "\n2. statistics of spends"
+			<< "\n3. exit"
+			<< "\nYour choice: ";
+		std::string choose;
+		std::cin >> choose;
+		if (choose == "1" || choose == "2") {
+			TransactionMap mainDBMap = buildTransactionMap(mainDB);
+
+			if (choose == "1") {}
+			if (choose == "2") mainDBMap.print();
+		}
+		else if (choose == "3") return;
+		else {
+			std::cout << COLORYELLOW << "\nwrong choice\n" << COLORDEFAULT;
+			system("pause");
+		}
+	}
+}
+
+void sortBy(TransactionMap& mainDBMap) {
+
 }

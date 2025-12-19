@@ -99,7 +99,9 @@ int main()
 				ShowAllTransactions(mainDB);
 				system("pause");
 			}
-			else if (mainChoice == "4") {}
+			else if (mainChoice == "4") {
+				showStatistics(mainDB);
+			}
 			else if (mainChoice == "5")
 				Special(mainDB);
 			else if (mainChoice == "6") {
@@ -109,7 +111,7 @@ int main()
 				loggedInUser = "";
 				isAuthorized = false;
 			}
-			else std::cout << COLORYELLOW << "\n\nWrong input" << COLORDEFAULT;
+			else std::cout << COLORYELLOW << "\nWrong input" << COLORDEFAULT;
 			system("cls");
 		} while (mainChoice != "6");
 	} while (true);
