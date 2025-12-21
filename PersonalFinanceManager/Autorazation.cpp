@@ -43,11 +43,13 @@ bool checkCorrectLogAndPass(std::string& name, std::string& pass) {
 			system("pause");
 			return false;
 		}
+
+		return true;
 	}
 	catch (const std::exception& e) {
 		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
+		return false;
 	}
-	return true;
 }
 
 bool loginUserFromDatabase(const std::string& name, const std::string& pass) {
@@ -124,11 +126,13 @@ bool viewAllUsers() {
 		else
 			for (const auto& row : r)
 				std::cout << row["id"].as<int>() << "\t" << row["username"].as<std::string>() << "\tDate Registration: " << row["date"].as<std::string>() << '\n';
+
+		return true;
 	}
 	catch (const std::exception& e) {
 		std::cerr << COLORRED << e.what() << '\n' << COLORDEFAULT;
+		return false;
 	}
-	return true;
 }
 
 void deleteUserByName() {

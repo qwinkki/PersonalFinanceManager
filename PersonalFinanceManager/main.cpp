@@ -99,9 +99,8 @@ int main()
 				ShowAllTransactions(mainDB);
 				system("pause");
 			}
-			else if (mainChoice == "4") {
+			else if (mainChoice == "4") 
 				showStatistics(mainDB);
-			}
 			else if (mainChoice == "5")
 				Special(mainDB);
 			else if (mainChoice == "6") {

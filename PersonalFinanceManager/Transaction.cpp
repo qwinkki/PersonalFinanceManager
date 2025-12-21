@@ -94,6 +94,8 @@ void deleteItem(std::vector<Transaction>& mainDB) {
 	system("pause");
 }
 
+
+
 TransactionMap buildTransactionMap(const std::vector<Transaction>& mainDB) {
 	TransactionMap map;
 
@@ -101,6 +103,79 @@ TransactionMap buildTransactionMap(const std::vector<Transaction>& mainDB) {
 		map.add(t);
 
 	return map;
+}
+
+void sortBy(std::vector<Transaction> mainDB) {
+	while (true) {
+		system("cls");
+		std::cout << "sort by"
+			<< "\n1. id"
+			<< "\n2. amount"
+			<< "\n3. date"
+			<< "\n4. description"
+			<< "\n5. exit"
+			<< "\n\nwhat type: ";
+		std::string sort, reverse;
+		std::cin >> sort;
+
+		if (sort == "1" || sort == "2") {
+			std::cout << "reverse? (y/n) (default: n): ";
+			std::cin >> reverse;
+		}
+
+		if (sort == "1") {
+			if (reverse == "y") {
+				std::sort(mainDB.begin(), mainDB.end(),
+					[](const Transaction& a, const Transaction& b) {
+						return a.getId() > b.getId();
+					});
+			}
+
+			ShowAllTransactions(mainDB);
+			system("pause");
+			return;
+		}
+		else if (sort == "2") {
+			if(reverse == "y") {
+				std::sort(mainDB.begin(), mainDB.end(),
+					[](const Transaction& a, const Transaction& b) {
+						return a.getAmount() < b.getAmount();
+					});
+			}
+			else {
+				std::sort(mainDB.begin(), mainDB.end(),
+					[](const Transaction& a, const Transaction& b) {
+						return a.getAmount() > b.getAmount();
+					});
+			}
+
+			ShowAllTransactions(mainDB);
+			system("pause");
+			return;
+		}
+		else if (sort == "3") {
+			std::sort(mainDB.begin(), mainDB.end(),
+				[](const Transaction& a, const Transaction& b) {
+					return a.getDate() < b.getDate();
+				});
+
+			ShowAllTransactions(mainDB);
+			system("pause");
+			return;
+		}
+		else if (sort == "4") {
+			std::sort(mainDB.begin(), mainDB.end(),
+				[](const Transaction& a, const Transaction& b) {
+					return a.getDescription() < b.getDescription();
+				});
+
+			ShowAllTransactions(mainDB);
+			system("pause");
+			return;
+		}
+		else if (sort == "5") return;
+		else std::cout << COLORYELLOW << "\n!!!wront input\n" << COLORDEFAULT;
+	}
 }
 
 void showStatistics(std::vector<Transaction>& mainDB) {
@@ -112,20 +187,17 @@ void showStatistics(std::vector<Transaction>& mainDB) {
 			<< "\nYour choice: ";
 		std::string choose;
 		std::cin >> choose;
-		if (choose == "1" || choose == "2") {
+		
+		if (choose == "1")
+			sortBy(mainDB);
+		else if (choose == "2") {
 			TransactionMap mainDBMap = buildTransactionMap(mainDB);
-
-			if (choose == "1") {}
-			if (choose == "2") mainDBMap.print();
+			mainDBMap.print();
 		}
 		else if (choose == "3") return;
 		else {
-			std::cout << COLORYELLOW << "\nwrong choice\n" << COLORDEFAULT;
+			std::cout << COLORYELLOW << "\nwrong input\n" << COLORDEFAULT;
 			system("pause");
 		}
 	}
-}
-
-void sortBy(TransactionMap& mainDBMap) {
-
 }

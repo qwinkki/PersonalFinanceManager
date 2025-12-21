@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <stdexcept>
+#include <algorithm>
 
 class Transaction {
 	int id;
