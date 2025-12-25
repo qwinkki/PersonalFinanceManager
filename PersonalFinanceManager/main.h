@@ -4,3 +4,4 @@
 #include "Special.h"
 #include "Autorization.h"
 #include "Database.h"
+#include "common.h"

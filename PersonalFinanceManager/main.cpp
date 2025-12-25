@@ -5,9 +5,8 @@ int main()
 	initializeUserDatabase(); // creating if dont exist user table
 	system("pause");
 
-	std::string authChoice;
 	bool isAuthorized = false;
-	do {
+	while(true) {
 
 		std::string l, p;
 
@@ -19,9 +18,11 @@ int main()
 				<< "3. Special\n"
 				<< "4. Exit Program\n"
 				<< "Your choice: ";
-			std::cin >> authChoice;
 
-			if (authChoice == "1") {
+			char authChoice;
+			std::cin >> authChoice; CINCHAR;
+
+			if (authChoice == '1') {
 				system("cls");
 				std::cout << "Login: ";
 				std::cin >> l;
@@ -34,7 +35,7 @@ int main()
 				}
 				else isAuthorized = true;
 			}
-			else if (authChoice == "2") {
+			else if (authChoice == '2') {
 				system("cls");
 				std::cout << "Create user\nLogin: ";
 				std::cin >> l;
@@ -46,39 +47,49 @@ int main()
 
 				system("pause");
 			}
-			else if (authChoice == "3") {
-				std::string authChoiceSpecial;
-
-				while (true) {
+			else if (authChoice == '3') {
+				char authChoiceSpecial;
+				do {
 					system("cls");
 					std::cout << "1. Delete User\n"
 						<< "2. Delete Data in user Table\n"
 						<< "3. Reset everything\n"
 						<< "4. Exit\n\n"
 						<< "Your choice: ";
-					std::cin >> authChoiceSpecial;
+					std::cin >> authChoiceSpecial; CINCHAR;
 
-
-					if (authChoiceSpecial == "1") deleteUserByName();
-					else if (authChoiceSpecial == "2") ClearUserTable();
-					else if (authChoiceSpecial == "3") resetEverything();
-					else if (authChoiceSpecial == "4") break;
-					else {
-						std::cout << "\nEnter number";
-						system("cls");
+					switch (authChoiceSpecial)
+					{
+					case '1':
+						deleteUserByName();
+						break;
+					case '2':
+						ClearUserTable();
+						break;
+					case '3':
+						resetEverything();
+						break;
+					case '4':
+						break;
+					default:
+						std::cout << "enter number\n";
+						system("pause");
+						break;
 					}
-
-				}
+				} while (authChoiceSpecial != '4');
 			}
-			else if (authChoice == "4") { system("cls"); return 0; }
-			else std::cout << COLORYELLOW << "Wrong input" << COLORDEFAULT;
+			else if (authChoice == '4') { system("cls"); return 0; }
+			else {
+				std::cout << COLORYELLOW << "Wrong input\n" << COLORDEFAULT;
+				system("pause");
+			}
 		} while (!isAuthorized);
 
 		std::vector<Transaction> mainDB;
 		std::string loggedInUser = l;
 		OpenDBAndConvertToVector(mainDB, loggedInUser);
 
-		std::string mainChoice;
+		char mainChoice;
 		do {
 			system("cls");
 			std::cout << std::string(7, '=') << "Personal Finance Manager" << std::string(7, '=') << '\n'
@@ -89,31 +100,40 @@ int main()
 				<< "5. Special\n"
 				<< "6. Sava & Exit\n\n"
 				<< "Your choice: ";
-			std::cin >> mainChoice;
+			std::cin >> mainChoice; CINCHAR;
 
-			if (mainChoice == "1")
+			switch (mainChoice)
+			{
+			case '1':
 				addObjects(mainDB);
-			else if (mainChoice == "2")
+				break;
+			case '2':
 				deleteItem(mainDB);
-			else if (mainChoice == "3") {
+				break;
+			case '3':
 				ShowAllTransactions(mainDB);
 				system("pause");
-			}
-			else if (mainChoice == "4") 
+				break;
+			case '4':
 				showStatistics(mainDB);
-			else if (mainChoice == "5")
+				break;
+			case '5':
 				Special(mainDB);
-			else if (mainChoice == "6") {
+				break;
+			case '6':
 				CloseAndSaveDB(mainDB, loggedInUser);
 				mainDB.clear();
 				l = "";
 				loggedInUser = "";
 				isAuthorized = false;
+				break;
+			default:
+				std::cout << COLORYELLOW << "wrong input\n" << COLORDEFAULT;
+				system("pause");
+				break;
 			}
-			else std::cout << COLORYELLOW << "\nWrong input" << COLORDEFAULT;
-			system("cls");
-		} while (mainChoice != "6");
-	} while (true);
+		} while (mainChoice != '6');
+	}
 
 	system("cls");
 	system("pause");

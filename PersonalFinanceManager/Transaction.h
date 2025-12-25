@@ -6,7 +6,7 @@
 #include <algorithm>
 
 class Transaction {
-	int id;
+	unsigned int id;
 	std::string category;
 	double amount;
 	std::string date;

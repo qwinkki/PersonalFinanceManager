@@ -1,27 +1,30 @@
 #include "Special.h"
 
 void Special(std::vector<Transaction>& mainDB) {
-    system("cls");
-    int choose;
+    char choose;
     do {
+        system("cls");
         std::cout << "1. Generage Transactions"
             << "\n2. Delete all Transactions"
             << "\n3. Exit"
             << "\nYour choose: ";
-        std::cin >> choose;
+        std::cin >> choose; CINCHAR;
     
         switch (choose) {
-        case 1:
+        case '1':
             generateAndAddRndTransactions(mainDB);
             break;
-        case 2:
+        case '2':
             deleteAllTransitions(mainDB);
             break;
+        case '3':
+            break;
         default:
+            std::cout << COLORYELLOW << "input number\n" << COLORDEFAULT;
+            system("pause");
             break;
         }
-        system("cls");
-    } while (choose != 3);
+    } while (choose != '3');
 }
 
 void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
@@ -55,7 +58,7 @@ void generateAndAddRndTransactions(std::vector<Transaction>& mainDB) {
         "Bonus", "Freelance work", "Investment return"
     };
 
-    int id;
+    unsigned int id;
     std::string category;
     double amount;
     std::string date;

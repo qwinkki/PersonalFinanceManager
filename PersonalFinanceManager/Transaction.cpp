@@ -14,16 +14,16 @@ void ShowAllTransactions(std::vector<Transaction> Transactions) {
 
 void addObjects(std::vector<Transaction>& mainDB) {
 	system("cls");
-	int howMuch;
+	unsigned int howMuch;
 	std::cout << "How much do you need transactions: ";
 	std::cin >> howMuch;
 	if (std::cin.fail()) 
 	{
-		std::cout << COLORYELLOW << "\nwrong input" << COLORDEFAULT;
+		std::cout << COLORYELLOW << "wrong input\n" << COLORDEFAULT;
 		return;
 	}
 
-	int id;
+	unsigned int id;
 	std::string category;
 	double amount;
 	std::string date;
@@ -33,7 +33,7 @@ void addObjects(std::vector<Transaction>& mainDB) {
 	std::string isIncomeInput;
 
 	try {
-		for (int i = 0; i < howMuch; i++) {
+		for (unsigned int i = 0; i < howMuch; i++) {
 			if (mainDB.size() > 0)
 				id = mainDB[mainDB.size() - 1].getId() + 1;
 			else id = 1;
@@ -52,7 +52,7 @@ void addObjects(std::vector<Transaction>& mainDB) {
 
 			mainDB.push_back(Transaction(id, category, amount, date, description, isIncome));
 		}
-		std::cout << COLORGREEN << "\n\nSuccesfully added!" << COLORDEFAULT;
+		std::cout << COLORGREEN << "\nSuccesfully added!" << COLORDEFAULT;
 	}
 	catch (std::exception e) { 
 		std::cout << COLORRED << e.what() << '\n' << COLORDEFAULT; 
@@ -115,16 +115,16 @@ void sortBy(std::vector<Transaction> mainDB) {
 			<< "\n4. description"
 			<< "\n5. exit"
 			<< "\n\nwhat type: ";
-		std::string sort, reverse;
-		std::cin >> sort;
+		char sort, reverse = 'n';
+		std::cin >> sort; CINCHAR;
 
-		if (sort == "1" || sort == "2") {
+		if (sort == '1' || sort == '2') {
 			std::cout << "reverse? (y/n) (default: n): ";
-			std::cin >> reverse;
+			std::cin >> reverse; CINCHAR;
 		}
 
-		if (sort == "1") {
-			if (reverse == "y") {
+		if (sort == '1') {
+			if (reverse == 'y') {
 				std::sort(mainDB.begin(), mainDB.end(),
 					[](const Transaction& a, const Transaction& b) {
 						return a.getId() > b.getId();
@@ -135,8 +135,8 @@ void sortBy(std::vector<Transaction> mainDB) {
 			system("pause");
 			return;
 		}
-		else if (sort == "2") {
-			if(reverse == "y") {
+		else if (sort == '2') {
+			if(reverse == 'y') {
 				std::sort(mainDB.begin(), mainDB.end(),
 					[](const Transaction& a, const Transaction& b) {
 						return a.getAmount() < b.getAmount();
@@ -153,7 +153,7 @@ void sortBy(std::vector<Transaction> mainDB) {
 			system("pause");
 			return;
 		}
-		else if (sort == "3") {
+		else if (sort == '3') {
 			std::sort(mainDB.begin(), mainDB.end(),
 				[](const Transaction& a, const Transaction& b) {
 					return a.getDate() < b.getDate();
@@ -163,7 +163,7 @@ void sortBy(std::vector<Transaction> mainDB) {
 			system("pause");
 			return;
 		}
-		else if (sort == "4") {
+		else if (sort == '4') {
 			std::sort(mainDB.begin(), mainDB.end(),
 				[](const Transaction& a, const Transaction& b) {
 					return a.getDescription() < b.getDescription();
@@ -173,31 +173,41 @@ void sortBy(std::vector<Transaction> mainDB) {
 			system("pause");
 			return;
 		}
-		else if (sort == "5") return;
-		else std::cout << COLORYELLOW << "\n!!!wront input\n" << COLORDEFAULT;
+		else if (sort == '5') return;
+		else {
+			std::cout << COLORYELLOW << "wront input\n" << COLORDEFAULT;
+			system("pause");
+		}
 	}
 }
 
 void showStatistics(std::vector<Transaction>& mainDB) {
-	while (true) {
+	char choose;
+	do {
 		system("cls");
 		std::cout << "1. sort by"
 			<< "\n2. statistics of spends"
 			<< "\n3. exit"
 			<< "\nYour choice: ";
-		std::string choose;
-		std::cin >> choose;
-		
-		if (choose == "1")
+		std::cin >> choose; CINCHAR;
+
+		TransactionMap mainDBMap = buildTransactionMap(mainDB);
+
+		switch (choose)
+		{
+		case '1':
 			sortBy(mainDB);
-		else if (choose == "2") {
-			TransactionMap mainDBMap = buildTransactionMap(mainDB);
+			break;
+		case '2':
 			mainDBMap.print();
-		}
-		else if (choose == "3") return;
-		else {
-			std::cout << COLORYELLOW << "\nwrong input\n" << COLORDEFAULT;
+			break;
+		case '3':
+			return;
+			break;
+		default:
+			std::cout << COLORYELLOW << "wrong input\n" << COLORDEFAULT;
 			system("pause");
+			break;
 		}
-	}
+	} while (choose != '3');
 }

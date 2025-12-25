@@ -1,5 +1,6 @@
 #include "Autorization.h"
 
+
 namespace {
 	bool isValid(const std::string& str) {
 		for (char c : str)
@@ -143,7 +144,7 @@ void deleteUserByName() {
 
 	try {
 		pqxx::work w(Database::getInstance());
-		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
+		pqxx::result r = w.exec("SELECT id FROM users WHERE username = " + w.quote(name));
 		
 
 		w.exec("DELETE FROM users WHERE username = " + w.quote(name));
@@ -166,6 +167,7 @@ void ClearUserTable() {
 	try {
 		pqxx::work w(Database::getInstance());
 		pqxx::result r = w.exec("SELECT id, password FROM users WHERE username = " + w.quote(name));
+
 		if (r.empty()) {
 			std::cout << "\n\nWrong username, " << name << " not found\n";
 			system("pause");
@@ -184,11 +186,12 @@ void ClearUserTable() {
 
 void resetEverything() {
 	system("cls");
-	std::string sure;
+	char sure;
 	std::cout << "Are you sure that you want to reset program? (y/n): ";
-	std::cin >> sure;
-	if (sure == "n" || sure == "N") return;
-	else if (sure == "y" || sure == "Y") {
+	std::cin >> sure; CINCHAR;
+
+	if (sure == 'n' || sure == 'N') return;
+	else if (sure == 'y' || sure == 'Y') {
 		if (!viewAllUsers()) return;
 
 		try {
